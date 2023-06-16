@@ -2,7 +2,7 @@ resource "aws_api_gateway_rest_api" "apigw" {
   name        = "${var.app_name}-${var.environment}-apigw-public"
   description = "Created by Terraform on ${timestamp()}"
   endpoint_configuration {
-    types = ["REGIONAL"]
+    types = [ var.apigw_type ]
   }
 
   disable_execute_api_endpoint = var.disable_execute_api_endpoint

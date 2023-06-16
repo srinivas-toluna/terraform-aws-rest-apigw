@@ -13,9 +13,14 @@ variable "environment" {
 
 
 # ----------- API GW variables
-# variable "apigw_type" {
-#     type = string
-# }
+variable "apigw_type" {
+    type = string
+}
+
+# this is required only for private APIs
+variable "allowed_vpce_ids" {
+    type = list(string)
+}
 
 variable "disable_execute_api_endpoint" {
     type = bool
