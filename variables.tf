@@ -52,7 +52,7 @@ variable "resource_name" {
 
 variable "child_resource_name" {
     type = string
-    default = ""
+    default = "none"
 }
 
 variable "http_method" {
