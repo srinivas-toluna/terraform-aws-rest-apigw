@@ -1,60 +1,35 @@
-resource "aws_api_gateway_rest_api" "apigw" {
-  name        = "${var.app_name}-${var.environment}-apigw-public"
-  description = "Created by Terraform on ${timestamp()}"
-  endpoint_configuration {
-    types = [ var.apigw_type ]
-  }
+locals {
+  app_name = var.app_name
+}
 
+module "gw" {
+  count = (var.create_apigw == true) ? 1 : 0
+  
+  source = "./modules/gw"
+
+  app_name = var.app_name
+  env_name = var.env_name
+
+  apigw_type = var.apigw_type
+  allowed_vpce_ids = var.allowed_vpce_ids
   disable_execute_api_endpoint = var.disable_execute_api_endpoint
 }
 
+module "api" {
+  count = (var.create_api == true) ? 1 : 0
+  
+  source = "./modules/api"
 
-resource "aws_api_gateway_deployment" "apigw_deployment" {
-  rest_api_id = aws_api_gateway_rest_api.apigw.id
+  apigw_id = var.apigw_id
+  app_name = var.app_name
+  env_name = var.env_name
 
-  triggers = {
-    redeployment = sha1(jsonencode([
-      aws_api_gateway_rest_api.apigw.body,
-      
-      #  resources
-      aws_api_gateway_resource.parent_resource,
-      aws_api_gateway_resource.child_resource,
-      aws_api_gateway_method.http_method,
-      aws_api_gateway_integration.integ,
+  resource_name = var.resource_name
+  child_resource_name = var.child_resource_name
+  http_method = var.http_method
+  integration_type = var.integration_type
 
-    ]))
-  }
-
-  lifecycle {
-    create_before_destroy = true
-  }
-  # depends_on = [
-  #   aws_api_gateway_rest_api.public_apigw,
-  #   aws_api_gateway_rest_api_policy.public_apigw_policy,
-  #   aws_api_gateway_method.aristotle_method,
-  #   aws_api_gateway_method.tissue_public_proxy_method
-  # ]
+  authorization = var.authorization
+  api_key_required = var.api_key_required
+  lambda_arn = var.lambda_arn
 }
-
-
-
-
-
-resource "aws_api_gateway_stage" "stage" {
-  deployment_id = aws_api_gateway_deployment.apigw_deployment.id
-  rest_api_id   = aws_api_gateway_rest_api.apigw.id
-  stage_name    = var.env_name
-  description = "${var.env_name} updated on ${timestamp()}"
-}
-
-resource "aws_api_gateway_method_settings" "method_settings" {
-  rest_api_id = aws_api_gateway_rest_api.apigw.id
-  stage_name  = aws_api_gateway_stage.stage.stage_name
-  method_path = "*/*"
-  settings {
-    logging_level = "INFO"
-    data_trace_enabled = true
-    metrics_enabled = true
-  }
-}
-

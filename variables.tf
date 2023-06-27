@@ -1,26 +1,32 @@
+variable "create_apigw" {
+    type = bool
+    default = false
+}
+
 # App variables
 variable "app_name" {
     type = string
+    default = ""
 }
 
 variable "env_name" {
     type = string
-}
-
-variable "environment" {
-    type = string
+    default = ""
 }
 
 
-# ----------- API GW variables
+
+# REGIONAL or PRIVATE
 variable "apigw_type" {
     type = string
+    default = ""
 }
 
-# this is required only for private APIs
 variable "allowed_vpce_ids" {
     type = list(string)
+    default = []
 }
+
 
 variable "disable_execute_api_endpoint" {
     type = bool
@@ -29,36 +35,39 @@ variable "disable_execute_api_endpoint" {
 
 
 # ----------- API variables
-# variable "api_name" {
-#     type = string
-# }
+variable "create_api" {
+    type = bool
+    default = false
+}
 
-# variable "apigw_already_exists" {
-#     type = bool
-# }
-
-# variable "apigw_id" {
-#     type = string
-# }
+variable "apigw_id" {
+    type = string
+    default = ""
+}
 
 variable "resource_name" {
     type = string
+    default = ""
 }
 
 variable "child_resource_name" {
     type = string
-    default = "none"
+    default = ""
 }
 
 variable "http_method" {
     type = string
-    # valid values: ANY, GET, POST, ...
-    default   = "ANY"
+    default = ""
 }
 
 variable "integration_type" {
     type = string
-    # valid values: AWS_PROXY (that is LAMBDA), HTTP, ...
+    default = ""
+}
+
+variable "lambda_arn" {
+    type = string
+    default = ""
 }
 
 variable "authorization" {
@@ -74,4 +83,5 @@ variable "api_key_required" {
 
 variable "uri" {
     type = string
+    default = ""
 }

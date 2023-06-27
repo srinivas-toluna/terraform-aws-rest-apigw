@@ -13,6 +13,7 @@ data "aws_iam_policy_document" "public_apigw_policy_doc" {
 }
 
 data "aws_iam_policy_document" "private_apigw_policy_doc" {
+
   statement {
       sid = ""
       effect = "Deny"
