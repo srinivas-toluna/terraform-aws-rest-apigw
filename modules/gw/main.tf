@@ -1,6 +1,7 @@
 resource "aws_api_gateway_rest_api" "apigw" {
 
-  name        = "apigw-${var.app_name}-${var.env_name}"
+  name        = ( (var.apigw_name_suffix != "" ) ? "${var.app_name}-${var.env_name}-${var.apigw_name_suffix}" : 
+      "${var.app_name}-${var.env_name}" )
   description = "Created by Terraform on ${timestamp()}"
   endpoint_configuration {
     types = [ var.apigw_type ]

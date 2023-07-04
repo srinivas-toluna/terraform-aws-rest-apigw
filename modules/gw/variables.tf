@@ -9,7 +9,7 @@ variable "env_name" {
     default = ""
 }
 
-variable "environment" {
+variable "apigw_name_suffix" {
     type = string
     default = ""
 }

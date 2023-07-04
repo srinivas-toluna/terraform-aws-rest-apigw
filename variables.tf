@@ -14,6 +14,10 @@ variable "env_name" {
     default = ""
 }
 
+variable "apigw_name_suffix" {
+    type = string
+    default = ""
+}
 
 
 # REGIONAL or PRIVATE

@@ -1,5 +1,5 @@
 data "aws_api_gateway_rest_api" "apigw" {
-  name = "apigw-${var.app_name}-${var.env_name}"
+  name = "${var.app_name}-${var.env_name}-${var.apigw_name_suffix}"
 }
 
 resource "aws_api_gateway_resource" "parent_resource" {

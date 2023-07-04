@@ -11,6 +11,11 @@ variable "env_name" {
     type = string
 }
 
+variable "apigw_name_suffix" {
+    type = string
+    default = ""
+}
+
 variable "resource_name" {
     type = string
     default = ""

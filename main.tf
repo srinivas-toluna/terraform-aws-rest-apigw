@@ -9,6 +9,7 @@ module "gw" {
 
   app_name = var.app_name
   env_name = var.env_name
+  apigw_name_suffix = var.apigw_name_suffix
 
   apigw_type = var.apigw_type
   allowed_vpce_ids = var.allowed_vpce_ids
@@ -23,6 +24,7 @@ module "api" {
   apigw_id = var.apigw_id
   app_name = var.app_name
   env_name = var.env_name
+  apigw_name_suffix = var.apigw_name_suffix
 
   resource_name = var.resource_name
   child_resource_name = var.child_resource_name
